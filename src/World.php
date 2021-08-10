@@ -2,6 +2,7 @@
 
 namespace Khsing\World;
 
+use Khsing\World\Models\City;
 use Khsing\World\Models\Continent;
 use Khsing\World\Models\Country;
 use Khsing\World\Models\Division;
@@ -29,6 +30,14 @@ class World
     public static function getCountryByCode($code)
     {
         return Country::getByCode($code);
+    }
+
+    public static function getCitiesByCountryCode($code)
+    {
+        $country = self::getCountryByCode($code);
+        return City::where([
+            ['country_id', $country->id]
+        ])->get();
     }
 
     public static function getByCode($code)
